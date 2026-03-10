@@ -1,0 +1,96 @@
+{
+  "id": "memory-lancedb",
+  "kind": "memory",
+  "uiHints": {
+    "embedding.provider": {
+      "label": "Embedding Provider",
+      "help": "Choose the embedding provider: openai or volcengine (ARK)"
+    },
+    "embedding.apiKey": {
+      "label": "API Key",
+      "sensitive": true,
+      "placeholder": "sk-proj-... / ARK_API_KEY",
+      "help": "API key for the embedding provider (use ${YOUR_API_KEY} env var)"
+    },
+    "embedding.model": {
+      "label": "Embedding Model",
+      "placeholder": "doubao-embedding-vision-251215",
+      "help": "Embedding model: text (doubao-embedding-text-*) or vision (doubao-embedding-vision-*)"
+    },
+    "embedding.baseUrl": {
+      "label": "Base URL",
+      "placeholder": "https://api.openai.com/v1",
+      "help": "Base URL for compatible providers. For ARK use: https://ark.cn-beijing.volces.com/api/v3",
+      "advanced": true
+    },
+    "embedding.dimensions": {
+      "label": "Dimensions",
+      "placeholder": "1536",
+      "help": "Vector dimensions for custom models",
+      "advanced": true
+    },
+    "dbPath": {
+      "label": "Database Path",
+      "placeholder": "~/.openclaw/memory/lancedb",
+      "advanced": true
+    },
+    "autoCapture": {
+      "label": "Auto-Capture",
+      "help": "Automatically capture important information from conversations"
+    },
+    "autoRecall": {
+      "label": "Auto-Recall",
+      "help": "Automatically inject relevant memories into context"
+    },
+    "captureMaxChars": {
+      "label": "Capture Max Chars",
+      "help": "Maximum message length eligible for auto-capture",
+      "advanced": true,
+      "placeholder": "500"
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "embedding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": ["openai", "volcengine"]
+          },
+          "apiKey": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "baseUrl": {
+            "type": "string"
+          },
+          "dimensions": {
+            "type": "number"
+          }
+        },
+        "required": ["apiKey"]
+      },
+      "dbPath": {
+        "type": "string"
+      },
+      "autoCapture": {
+        "type": "boolean"
+      },
+      "autoRecall": {
+        "type": "boolean"
+      },
+      "captureMaxChars": {
+        "type": "number",
+        "minimum": 100,
+        "maximum": 10000
+      }
+    },
+    "required": ["embedding"]
+  }
+}
